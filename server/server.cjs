@@ -32,7 +32,7 @@ function validateEmail(email) {
     }
 }
 
-app.post('/register', (req, res) => {
+app.get('/register', (req, res) => {
     const { name, email, password } = req.body
     try {
         if (validateEmail(email)) {
@@ -77,20 +77,46 @@ app.post('/login', (req, res) => {
 }
 )
 
+const today = new Date();
+
+let date = '';
+    
+const setActDate = () => {
+    
+    const actMonth = today.getMonth() + 1
+    const actDate = today.getDate()
+    const actYear = today.getFullYear()
+    
+    return `${actDate}/${actMonth}/${actYear}`
+}
+
 app.post('/buys', (req, res) => {
-    console.log('Hello')
-    const { date, product, value, desc } = req.body
-    let sql = "INSERT INTO buys ( date, product, value, desc ) VALUES ( ?, ?, ?, ? )"
+    const { product, value, desc } = req.body
+    date = setActDate();
+    let sql = "INSERT INTO buys ( date, product, value, `desc` ) VALUES ( ?, ?, ?, ? )"
     db.query(sql, [date, product, value, desc], (err, result) => {
-        try {
-            console.log(date, product, value, desc)
-            if (result.affectedRows > 0) {
+        try { if (err) {
+            console.error("MySQL Error", err.message)
+        } else if (result.affectedRows > 0) {
                 return res.status(201).json({ message: "Custos adicionados ao banco de dados com sucesso!" })
             } else {
                 return res.status(400).json({message: "Tá chegando aqui, else try"})
             }
         } catch {
             return res.status(400).json({ message: 'Ta chegando aqui' })
+        }
+    })
+})
+
+app.get('/buys', (req, res) => {
+    let sql = "SELECT * FROM buys";
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("MySQL error", err.message);
+            return res.status(500).json({message: "Internal Server Error"});
+        } else {
+            console.log(result)
+            return res.status(200).json(result)
         }
     })
 })

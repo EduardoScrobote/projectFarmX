@@ -6,16 +6,18 @@ function SideBar() {
                 <div className="h-screen flex flex-col">
                     <h1 className="mt-6 ml-4 text-4xl">Fazenda X</h1>
                     <span className="mt-12 ml-4 text-xl">Visão Geral</span>
+                    <span className="mt-12 ml-4 text-xl">Vendas</span>
+                    <span className="mt-12 ml-4 text-xl">Caixa</span>
                     <span className="mt-12 ml-4 text-xl"><Link to='/Dashboard/Buys'>Compras</Link></span>
                     <span className="mt-12 ml-4 text-xl">Vendas</span>
                     <span className="mt-12 ml-4 text-xl">Receitas Gerais</span>
                     <span className="mt-12 ml-4 text-xl">Emprestimos/Financiamentos</span>
                     <span className="mt-12 ml-4 text-xl">Despesas de RH</span>
-                    <span className="mt-12 ml-4 text-xl">Estoque</span>
+                    <span className="mt-12 ml-4 text-xl">Estoque</span> 
                     <span className="mt-12 ml-4 text-xl">Home</span>
                 </div>
-            </div>
+            </div> 
     )
-}
+} 
 
 export default SideBar
